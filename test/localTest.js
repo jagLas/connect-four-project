@@ -22,7 +22,7 @@ grid = [['X','O','X',' ','X','X','X'],
 // console.log(ConnectFour.makeDiagonals(grid));
 // console.log(ConnectFour.makeBackwardsDiagonals(grid));
 
-console.log(ConnectFour.checkWin(grid));
+// console.log(ConnectFour.checkWin(grid));
 
 // let test = (array) => {
 //     let result = array.reduce((accum, el) => {

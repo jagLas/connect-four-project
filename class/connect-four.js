@@ -94,8 +94,22 @@ class ConnectFour {
   }
 
   static placeMove(){
+    //finds the loewst available place to drop your piece.
+    function findLowestRow(grid, col) {
+      const numRows = grid.length;
+
+      for (let row = numRows - 1; row >= 0; row--){
+
+        if(grid[row][col] === ' ') {
+          return row;
+        }
+      }
+    }
+
     //set the grid to display move and render screen
-    Screen.setGrid(this.cursor.row, this.cursor.col, this.playerTurn);
+    const row = findLowestRow(Screen.grid, this.cursor.col);
+
+    Screen.setGrid(row, this.cursor.col, this.playerTurn);
     
     if (this.playerTurn === 'O') {
       this.playerTurn = 'X';
