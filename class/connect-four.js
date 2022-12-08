@@ -79,7 +79,7 @@ class ConnectFour {
       for (let j = i; j < i + 4; j++) {
         consecutive.push(array[j]);
       }
-      console.log(consecutive)
+
       if (this.isSame(consecutive) && consecutive[0] === mark) {
         return mark;
       }
@@ -113,10 +113,9 @@ class ConnectFour {
 
   //function to change columns to rows, then extract rows
   static makeColumns (grid) {
-    let cols = [];
-    let numRows = grid.length;
-    let numCols = grid[0].length;
-    console.log(numRows, numCols)
+    const cols = [];
+    const numRows = grid.length;
+    const numCols = grid[0].length;
 
     for (let col = 0; col < numCols; col ++) {
       let column = [];
@@ -130,12 +129,41 @@ class ConnectFour {
 
     return cols;
   }
+
   //function to reverse grid
+  static reverseGrid(grid) {
+    const newGrid = [];
+    grid.forEach(row => {
+      const reverseRow = [];
+      row.forEach(el => reverseRow.push(el))  //makes a copy of each row
+      reverseRow.reverse(); //reverses the copy
+      newGrid.push(reverseRow); //pushes reversed copy to newGrid
+    })
+    return newGrid;
+  }
 
   //function to make diagonals
+  static makeDiagonals (grid) {
+    const diagonals = [];
+    const numRows = grid.length;
+    const numCols = grid[0].length;
+    for (let row = 0; row < numRows - 3; row ++) {
+      for (let col = 0; col < numCols - 3; col++) {
+        let diagonal = [];
+        for (let i = row, j = col; i < row + 4 && j < col + 4; i++, j++) {
+          diagonal.push(grid[i][j]);
+        }
+        diagonals.push(diagonal);
+      }
+    }
+    return diagonals;
+  }
 
   //use diagonal function on reversed grid
-
+  static makeBackwardsDiagonals(grid) {
+    const reversedGrid = this.reverseGrid(grid);
+    return this.makeDiagonals(reversedGrid);
+  }
   //check all of the above in the checkFourFunction
 
 }
