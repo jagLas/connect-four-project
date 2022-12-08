@@ -49,13 +49,49 @@ class ConnectFour {
 
 
   static checkWin(grid) {
-
+    //checks for Ties
+    function checkTies(grid) {
+      //finds if there is an empty square and returns false if there is one and true if there isn't
+      for (let row = 0; row < grid.length; row++){
+        for (let col = 0; col < grid[0].length; col++){
+          let square = grid[row][col];
+          if (square === ' ') {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
     // Return 'X' if player X wins
     // Return 'O' if player O wins
     // Return 'T' if the game is a tie
     // Return false if the game has not ended
+    const allOptions = [];
+    allOptions.push(...this.makeRows(grid));
+    allOptions.push(...this.makeColumns(grid));
+    allOptions.push(...this.makeDiagonals(grid));
+    allOptions.push(...this.makeBackwardsDiagonals(grid));
 
+    let winningRow = allOptions.filter(row => {
+      if (this.fourInRow(row, 'X')){
+        return true;
+      } else if (this.fourInRow(row, 'O')) {
+        return true;
+      }
+    });
+
+    if (winningRow.length === 0 && checkTies(grid)) {
+      return 'T';
+    } else if(winningRow.length === 0) {
+      return false;
+    } else if (winningRow[0].includes('X')) {
+      return 'X';
+    } else {
+      return 'O';
+    }
+    
   }
+
 
   static endGame(winner) {
     if (winner === 'O' || winner === 'X') {
