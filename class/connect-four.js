@@ -25,6 +25,7 @@ class ConnectFour {
     Screen.addCommand('down', 'moves cursor down', ConnectFour.downCommand.bind(this))
     Screen.addCommand('left', 'moves cursor left', ConnectFour.leftCommand.bind(this))
     Screen.addCommand('right', 'moves cursor right', ConnectFour.rightCommand.bind(this))
+    Screen.addCommand('space', 'place an X or an O', ConnectFour.placeMove.bind(this));
 
     this.cursor.setBackgroundColor();
     Screen.render();
@@ -92,6 +93,25 @@ class ConnectFour {
     
   }
 
+  static placeMove(){
+    //set the grid to display move and render screen
+    Screen.setGrid(this.cursor.row, this.cursor.col, this.playerTurn);
+    
+    if (this.playerTurn === 'O') {
+      this.playerTurn = 'X';
+    } else {
+      this.playerTurn = 'O';
+    }
+    Screen.setMessage(`It is Player ${this.playerTurn}'s turn`);
+    Screen.render();
+
+    //checks if there is a winner
+    let winner = ConnectFour.checkWin(Screen.grid);
+    if(winner){
+      ConnectFour.endGame(winner);
+    }
+
+  }
 
   static endGame(winner) {
     if (winner === 'O' || winner === 'X') {
